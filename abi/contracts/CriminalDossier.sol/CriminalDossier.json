@@ -1,0 +1,8 @@
+[
+  "constructor(address,uint64,uint32)",
+  "event SetInfo(address,uint64,uint32)",
+  "function getImprisonmentYears() view returns (uint32)",
+  "function getPerson() view returns (address)",
+  "function getPlannedImprisonmentYears() view returns (uint64)",
+  "function setInfo(address,uint64,uint32)"
+]

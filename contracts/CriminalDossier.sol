@@ -21,8 +21,8 @@ contract CriminalDossier {
     function setInfo(address _person, uint64 _plannedImprisonmentYears, uint32 _imprisonmentYears) public {
         // convert all input info to shifted uind data
         uint160 shiftedUintPerson = uint160(_person);
-        uint shiftedImprisonmentYears = _shiftLeft(_imprisonmentYears, 160);
-        uint shiftedPlannedImprisonmentYears = _shiftLeft(_plannedImprisonmentYears, 192);
+        uint shiftedPlannedImprisonmentYears = _shiftLeft(_plannedImprisonmentYears, 160);
+        uint shiftedImprisonmentYears = _shiftLeft(_imprisonmentYears, 224);        
 
         console.log("Setting data:");
         console.log(_plannedImprisonmentYears);
@@ -31,8 +31,8 @@ contract CriminalDossier {
 
         // save datas to allInfo storage variable
         allInfo = _or(allInfo, shiftedUintPerson);
-        allInfo = _or(allInfo, shiftedImprisonmentYears);
         allInfo = _or(allInfo, shiftedPlannedImprisonmentYears);
+        allInfo = _or(allInfo, shiftedImprisonmentYears);
 
         emit SetInfo(_person, _plannedImprisonmentYears, _imprisonmentYears);
     }
@@ -48,18 +48,18 @@ contract CriminalDossier {
 
     function getImprisonmentYears() public view returns (uint32) {
 
-        uint mask = (2**192) - (2**160);
+        uint mask = (2**256) - (2**224);
         uint256 imprisonmentYears = _and(allInfo, mask);
-        uint256 shiftedImprisonmentYears = _shiftRight(imprisonmentYears, 160);
+        uint256 shiftedImprisonmentYears = _shiftRight(imprisonmentYears, 224);
 
         return uint32(shiftedImprisonmentYears);
     }
 
     function getPlannedImprisonmentYears() public view returns (uint64) {
 
-        uint mask = (2**256) - (2**192);
+        uint mask = (2**224) - (2**160);
         uint256 plannedImprisonmentYears = _and(allInfo, mask);
-        uint256 shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 192);
+        uint256 shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 160);
 
         console.log("Uint64:");
         console.log(plannedImprisonmentYears);

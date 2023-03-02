@@ -26,7 +26,6 @@ contract CriminalDossier {
 
         console.log("Setting data:");
         console.log(_plannedImprisonmentYears);
-        console.log(shiftedPlannedImprisonmentYears);
         console.log("___ ___ ___ ___ ___");
 
         // save datas to allInfo storage variable
@@ -58,11 +57,16 @@ contract CriminalDossier {
     function getPlannedImprisonmentYears() public view returns (uint64) {
 
         uint mask = (2**224) - (2**160);
-        uint256 plannedImprisonmentYears = _and(allInfo, mask);
-        uint256 shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 160);
+        uint256 plannedImprisonmentYears = _and(allInfo, mask);        
 
         console.log("Uint64:");
-        console.log(plannedImprisonmentYears);
+        uint256 shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 159);
+        console.log(shiftedPlannedImprisonmentYears);
+
+        shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 160);
+        console.log(shiftedPlannedImprisonmentYears);
+
+        shiftedPlannedImprisonmentYears = _shiftRight(plannedImprisonmentYears, 161);
         console.log(shiftedPlannedImprisonmentYears);
         console.log("___ ___ ___ ___ ___");
 
